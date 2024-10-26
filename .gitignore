@@ -1,0 +1,7 @@
+# Build folders
+**/bin
+**/obj
+
+# Rider files
+**/.idea
+*.user
