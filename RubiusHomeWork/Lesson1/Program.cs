@@ -1,6 +1,3 @@
-﻿const string greetingString = """
-                              Hi! I a'm Rikhter Mark.
-                              I am 26.
-                              """;
+﻿const string GreetingMessage = "Hi! I'm Rikhter Mark.\nI am 26.";
 
-Console.WriteLine(greetingString);
+Console.WriteLine(GreetingMessage);
