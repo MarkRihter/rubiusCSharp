@@ -1,66 +1,74 @@
-﻿ReadYearAndCheckIfItIsLeap();
+﻿using Lesson2;
 
-void ReadYearAndCheckIfItIsLeap()
+int exerciseNumber = 0;
+
+while (true)
 {
-    bool isValid;
-    int year;
+    bool isExiting = HandleInput();
 
-    do
+    if (isExiting) break;
+}
+
+
+bool HandleInput()
+{
+    bool isExiting = false;
+
+    RenderExerciseSelection();
+
+    ConsoleKeyInfo key = Console.ReadKey();
+
+    switch (key.Key)
     {
-        (isValid, year) = HandleUserInput();
+        case ConsoleKey.UpArrow:
+            OnUpKey();
+            break;
+        case ConsoleKey.DownArrow:
+            OnDownKey();
+            break;
+        case ConsoleKey.Enter:
+            isExiting = true;
+            OnEnterKey();
+            break;
+    }
 
-        if (isValid == false)
-        {
-            Console.WriteLine("Invalid year 😠");
-            continue;
-        }
-
-        bool isLeap = CheckIfYearIsLeap(year);
-
-        string answer = isLeap ? "YES" : "NO";
-
-        Console.WriteLine(answer);
-    } while (isValid == false);
-
-    Console.WriteLine(year);
+    return isExiting;
 }
 
-(bool isValid, int year) HandleUserInput()
+void OnUpKey()
 {
-    string? userInput = GetUserInput();
-
-    bool parsingSucceeded = int.TryParse(userInput, out int enteredYear);
-
-    bool isValidYear = parsingSucceeded && CheckIfYearIsValid(enteredYear);
-
-    return (isValidYear, enteredYear);
+    if (exerciseNumber < 1) return;
+    exerciseNumber--;
 }
 
-string GetUserInput()
+void OnDownKey()
 {
-    Console.Write("Enter a year: ");
-
-    return Console.ReadLine() ?? string.Empty;
+    if (exerciseNumber > 1) return;
+    exerciseNumber++;
 }
 
-bool CheckIfYearIsValid(int year)
+void OnEnterKey()
 {
-    const int minYear = 0;
-    const int maxYear = 30000;
+    Console.Clear();
 
-    switch (year)
+    switch (exerciseNumber)
     {
-        case < minYear: return false;
-        case > maxYear: return false;
-        default: return true;
+        case 0: Ex1.ReadYearAndCheckIfItIsLeap();
+            break;
+        case 1: Ex2.ReadAndCalculateTotalExpenses();
+            break;
     }
 }
 
-bool CheckIfYearIsLeap(int year)
-{
-    bool isDivisibleBy4 = year % 4 == 0;
-    bool isDivisibleBy100 = year % 100 == 0;
-    bool isDivisibleBy400 = year % 400 == 0;
 
-    return isDivisibleBy400 || isDivisibleBy4 && !isDivisibleBy100;
+void RenderExerciseSelection()
+{
+    Console.Clear();
+
+    Console.WriteLine(
+        $"""
+         Select exercise number:
+         {(exerciseNumber == 0 ? "> " : "  ")} Exercise 1
+         {(exerciseNumber == 1 ? "> " : "  ")} Exercise 2
+         """);
 }
