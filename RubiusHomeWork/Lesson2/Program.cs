@@ -1,6 +1,6 @@
 ﻿using Lesson2;
 
-int exerciseNumber = 0;
+ExerciseSelector exerciseSelector = new ExerciseSelector( [new Ex1(), new Ex2()]);
 
 while (true)
 {
@@ -14,61 +14,23 @@ bool HandleInput()
 {
     bool isExiting = false;
 
-    RenderExerciseSelection();
+    exerciseSelector.Render();
 
     ConsoleKeyInfo key = Console.ReadKey();
 
     switch (key.Key)
     {
         case ConsoleKey.UpArrow:
-            OnUpKey();
+            exerciseSelector.DecreaseIndex();
             break;
         case ConsoleKey.DownArrow:
-            OnDownKey();
+            exerciseSelector.IncreaseIndex();
             break;
         case ConsoleKey.Enter:
             isExiting = true;
-            OnEnterKey();
+            exerciseSelector.Run();
             break;
     }
 
     return isExiting;
-}
-
-void OnUpKey()
-{
-    if (exerciseNumber < 1) return;
-    exerciseNumber--;
-}
-
-void OnDownKey()
-{
-    if (exerciseNumber > 1) return;
-    exerciseNumber++;
-}
-
-void OnEnterKey()
-{
-    Console.Clear();
-
-    switch (exerciseNumber)
-    {
-        case 0: Ex1.ReadYearAndCheckIfItIsLeap();
-            break;
-        case 1: Ex2.ReadAndCalculateTotalExpenses();
-            break;
-    }
-}
-
-
-void RenderExerciseSelection()
-{
-    Console.Clear();
-
-    Console.WriteLine(
-        $"""
-         Select exercise number:
-         {(exerciseNumber == 0 ? "> " : "  ")} Exercise 1
-         {(exerciseNumber == 1 ? "> " : "  ")} Exercise 2
-         """);
 }

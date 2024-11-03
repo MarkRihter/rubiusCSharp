@@ -1,8 +1,8 @@
 namespace Lesson2;
 
-public static class Ex1
+public class Ex1 : IExecutable
 {
-    public static void ReadYearAndCheckIfItIsLeap()
+    public void Run()
     {
         bool isValid;
         int year;

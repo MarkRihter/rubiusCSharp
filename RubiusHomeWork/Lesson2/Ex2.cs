@@ -2,9 +2,9 @@ using System.Globalization;
 
 namespace Lesson2;
 
-public static class Ex2
+public class Ex2 : IExecutable
 {
-    public static void ReadAndCalculateTotalExpenses()
+    public void Run()
     {
         int numberOfRecords = ReadNumberOfRecords();
         decimal totalExpenses = 0m;
