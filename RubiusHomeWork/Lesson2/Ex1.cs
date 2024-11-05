@@ -47,23 +47,21 @@ public class Ex1 : IExecutable
 
     private static bool CheckIfYearIsValid(int year)
     {
-        const int minYear = 0;
+        const int minYear = 1;
         const int maxYear = 30000;
 
-        switch (year)
-        {
-            case < minYear: return false;
-            case > maxYear: return false;
-            default: return true;
-        }
+        bool isGreaterOrEqualsThanMinYear = year >= minYear;
+        bool isLessOrEqualThanMaxYear = year <= maxYear;
+
+        return isGreaterOrEqualsThanMinYear && isLessOrEqualThanMaxYear;
     }
 
     private static bool CheckIfYearIsLeap(int year)
     {
         bool isDivisibleBy4 = year % 4 == 0;
-        bool isDivisibleBy100 = year % 100 == 0;
+        bool isNotDivisibleBy100 = year % 100 != 0;
         bool isDivisibleBy400 = year % 400 == 0;
 
-        return isDivisibleBy400 || isDivisibleBy4 && !isDivisibleBy100;
+        return isDivisibleBy400 || isDivisibleBy4 && isNotDivisibleBy100;
     }
 }

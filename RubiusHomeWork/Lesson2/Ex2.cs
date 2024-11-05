@@ -28,8 +28,14 @@ public class Ex2 : IExecutable
 
         bool parsingSucceeded = int.TryParse(userInput, out int numberOfRecords);
 
-        if (parsingSucceeded) return numberOfRecords;
-        else return 0;
+        if (parsingSucceeded)
+        {
+            return numberOfRecords;
+        }
+        else
+        {
+            return 0;
+        };
     }
 
     private static decimal ReadAmountOfExpenses(int i)
