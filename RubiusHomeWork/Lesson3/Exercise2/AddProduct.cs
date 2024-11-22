@@ -2,7 +2,7 @@ using Common;
 
 namespace Lesson3.Exercise2;
 
-internal class AddProduct(Dictionary<string, Product> products) : NameReader,  ISelectable
+internal class AddProduct(Dictionary<string, Product> products) : SingleProductHandler,  ISelectable
 {
     public string Name => "Add product";
 

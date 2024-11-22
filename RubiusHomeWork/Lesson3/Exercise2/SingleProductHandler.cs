@@ -1,6 +1,6 @@
 namespace Lesson3.Exercise2;
 
-internal class NameReader
+internal class SingleProductHandler
 {
     protected static string ReadName()
     {
