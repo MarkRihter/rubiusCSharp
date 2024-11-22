@@ -1,12 +1,15 @@
 using System.Globalization;
+using Common;
 
 namespace Lesson2;
 
-public class Ex2 : IExecutable
+internal class L2E2 : ISelectable
 {
-    public void Run()
+    public string Name => "Exercise 2";
+    public void Select()
     {
-        int numberOfRecords = ReadNumberOfRecords();
+        InputUtils.ReadNumber(out int numberOfRecords);
+
         decimal totalExpenses = 0m;
 
         for (int i = 0; i < numberOfRecords; i++)
@@ -18,24 +21,6 @@ public class Ex2 : IExecutable
                            ===============
                            Total expenses: {totalExpenses}
                            """);
-    }
-
-    private static int ReadNumberOfRecords()
-    {
-        Console.Write("Enter number of records: ");
-
-        string? userInput = Console.ReadLine() ?? string.Empty;
-
-        bool parsingSucceeded = int.TryParse(userInput, out int numberOfRecords);
-
-        if (parsingSucceeded)
-        {
-            return numberOfRecords;
-        }
-        else
-        {
-            return 0;
-        };
     }
 
     private static decimal ReadAmountOfExpenses(int i)

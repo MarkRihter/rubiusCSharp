@@ -1,8 +1,12 @@
+using Common;
+
 namespace Lesson2;
 
-public class Ex1 : IExecutable
+internal class L2E1 : ISelectable
 {
-    public void Run()
+    public string Name => "Exercise 1";
+
+    public void Select()
     {
         bool isValid;
         int year;
@@ -29,22 +33,12 @@ public class Ex1 : IExecutable
 
     private static (bool isValid, int year) HandleUserInput()
     {
-        string? userInput = GetUserInput();
+        InputUtils.ReadNumber(out int year, "Enter a year: ");
 
-        bool parsingSucceeded = int.TryParse(userInput, out int enteredYear);
+        bool isValidYear = CheckIfYearIsValid(year);
 
-        bool isValidYear = parsingSucceeded && CheckIfYearIsValid(enteredYear);
-
-        return (isValidYear, enteredYear);
+        return (isValidYear, year);
     }
-
-    private static string GetUserInput()
-    {
-        Console.Write("Enter a year: ");
-
-        return Console.ReadLine() ?? string.Empty;
-    }
-
     private static bool CheckIfYearIsValid(int year)
     {
         const int minYear = 1;
