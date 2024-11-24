@@ -1,3 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using Common;
+using Lesson4.Exercise1;
+using Lesson4.Exercise2;
 
-Console.WriteLine("Hello, World!");
+var tuiSelector = new TuiSelector([new L4E1(), new L4E2()]);
+
+tuiSelector.Run();
