@@ -1,17 +1,12 @@
 namespace Lesson8.Exercise2;
 
-public class PingPong
+public class PingPong(string name, double skill)
 {
-    public string Name { get; }
-    public double Skill { get; }
+    private string Name { get; } = name;
 
-    private Random random = new Random();
+    private double Skill { get; } = skill;
 
-    public PingPong(string name, double skill)
-    {
-        Name = name;
-        Skill = skill;
-    }
+    private readonly Random _random = new();
 
     public delegate void PingPongHit(PingPong opponent);
 
@@ -22,30 +17,46 @@ public class PingPong
         HitHandler += pingPong.StrikeBack;
     }
 
-    private void StrikeBack(PingPong opponent)
-    {
-        var skillDifference = double.Abs(Skill - opponent.Skill);
-
-        var luck = (random.NextDouble() - 0.5) / 20;
-        var victoryThreshold = random.NextDouble() + luck;
-
-        var isHitSuccessful = victoryThreshold <= skillDifference;
-
-        if (isHitSuccessful)
-        {
-            Console.WriteLine($"{Name} нанес победный удар в схватке с {opponent.Name}");
-        }
-        else
-        {
-            Console.WriteLine($"{Name} отбил удар {opponent.Name}");
-            HitHandler?.Invoke(this);
-        }
-    }
-
     public void StartGame()
     {
         Console.WriteLine($"{Name} Начинает игру");
 
+        HitHandler?.Invoke(this);
+    }
+
+    private void StrikeBack(PingPong opponent)
+    {
+        var isStrikeSuccessful = DetermineStrikeSuccess(opponent.Skill);
+
+        if (isStrikeSuccessful)
+        {
+            OnStrikeSuccess(opponent.Name);
+        }
+        else
+        {
+            OnStrikeUnSuccess(opponent.Name);
+        }
+    }
+
+    private bool DetermineStrikeSuccess(double opponentSkill)
+    {
+        var skillDifference = double.Abs(Skill - opponentSkill);
+
+        var luck = (_random.NextDouble() - 0.5) / 20;
+
+        var victoryThreshold = _random.NextDouble() + luck;
+
+        return victoryThreshold <= skillDifference;
+    }
+
+    private void OnStrikeSuccess(string opponentName)
+    {
+        Console.WriteLine($"{Name} нанес победный удар в схватке с {opponentName}");
+    }
+
+    private void OnStrikeUnSuccess(string opponentName)
+    {
+        Console.WriteLine($"{Name} отбил удар {opponentName}");
         HitHandler?.Invoke(this);
     }
 }
