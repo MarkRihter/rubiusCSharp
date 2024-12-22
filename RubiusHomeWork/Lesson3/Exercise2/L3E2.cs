@@ -11,7 +11,7 @@ internal class L3E2 : ISelectable
     public void Select()
     {
         var tuiSelector = new TuiSelector(selectables:
-        [
+        (ISelectable[])[
             new AddProduct(_products),
             new ListProducts(_products),
             new DeleteProduct(_products),

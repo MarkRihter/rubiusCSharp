@@ -13,7 +13,7 @@ public class L4E2 : ISelectable
     public void Select()
     {
         var tuiSelector =
-            new TuiSelector([
+            new TuiSelector((ISelectable[])[
                 new AirVehicleSelect(SetVehicle),
                 new GroundVehicleSelect(SetVehicle),
                 new WaterVehicleSelect(SetVehicle)

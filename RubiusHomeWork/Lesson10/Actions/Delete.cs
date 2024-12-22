@@ -1,5 +1,4 @@
 using Common;
-using Lesson10.Entities;
 
 namespace Lesson10.Actions;
 
@@ -7,31 +6,42 @@ public class Delete(ApplicationContext db) : ISelectable
 {
     public string Name { get; } = "Delete";
 
+    private TuiSelector TuiSelector { get; } = new(new List<ISelectable>(), () => "Select equipment to delete");
+
     public void Select()
     {
-        SearchAndDeleteEquipment();
+        SelectAndDeleteEquipment();
 
         db.SaveChanges();
     }
 
-    private void SearchAndDeleteEquipment()
+    private void SelectAndDeleteEquipment()
     {
-        InputUtils.ReadNumber(out int id, "Enter id to delete: ");
+        TuiSelector.Clear();
 
-        var equipment = db.Equipments.Find(id);
+        FillSelectorWithSelectables();
 
-        if (equipment != null)
+        TuiSelector.Run();
+    }
+
+    private void FillSelectorWithSelectables()
+    {
+        foreach (var equipment in db.Equipments.ToList())
         {
-            DeleteEquipment(equipment);
-        }
-        else
-        {
-            Console.WriteLine("Equipment for given id not found");
+            var selectable = new SelectableEquipment(equipment, DeleteEquipment);
+
+            TuiSelector.Add(selectable);
         }
     }
 
-    private void DeleteEquipment(Equipment equipment)
+    private void DeleteEquipment(SelectableEquipment selectableEquipment)
     {
-        db.Equipments.Remove(equipment);
+        db.Equipments.Remove(selectableEquipment.Equipment);
+        TuiSelector.Remove(selectableEquipment);
+
+        Console.WriteLine(
+            $"Equipment {selectableEquipment.Equipment.Name} has been deleted");
+
+        TuiSelector.WaitForInput();
     }
 }

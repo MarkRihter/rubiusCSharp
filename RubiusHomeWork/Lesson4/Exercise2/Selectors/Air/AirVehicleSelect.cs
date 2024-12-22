@@ -8,7 +8,7 @@ public class AirVehicleSelect(Action<Vehicle> setVehicle) : ISelectable
 
     public void Select()
     {
-        var tuiSelector = new TuiSelector([
+        var tuiSelector = new TuiSelector((ISelectable[])[
             new HeliSelect(setVehicle),
             new PlaneSelector(setVehicle),
             new ZeppelinSelector(setVehicle),

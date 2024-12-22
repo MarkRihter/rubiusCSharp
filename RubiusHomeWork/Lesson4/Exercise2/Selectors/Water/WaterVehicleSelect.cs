@@ -8,7 +8,7 @@ public class WaterVehicleSelect(Action<Vehicle> setVehicle) : ISelectable
 
     public void Select()
     {
-        var tuiSelector = new TuiSelector([
+        var tuiSelector = new TuiSelector((ISelectable[])[
             new BoatSelect(setVehicle),
             new HydroBikeSelect(setVehicle),
             new UBoatSelect(setVehicle),

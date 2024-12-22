@@ -9,7 +9,7 @@ public class GroundVehicleSelect(Action<Vehicle> setVehicle) : ISelectable
 
     public void Select()
     {
-        var tuiSelector = new TuiSelector([
+        var tuiSelector = new TuiSelector((ISelectable[])[
             new BikeSelect(setVehicle),
             new CarSelect(setVehicle),
             new TruckSelect(setVehicle),

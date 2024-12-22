@@ -4,7 +4,7 @@ using Lesson10.Actions;
 
 using (ApplicationContext db = new ApplicationContext())
 {
-    var tui = new TuiSelector([
+    var tui = new TuiSelector((ISelectable[])[
         new Search(db),
         new Create(db),
         new Read(db),

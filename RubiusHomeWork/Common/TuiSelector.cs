@@ -1,16 +1,28 @@
 namespace Common;
 
-public class TuiSelector(ISelectable[] selectables)
+public class TuiSelector(List<ISelectable> selectables)
 {
+    public List<ISelectable> Selectables { get; } = selectables;
     private int _currentIndex = 0;
     private Func<string>? _header;
     private Func<string>? _footer;
+
+
+    public TuiSelector(ISelectable[] selectables) : this(selectables.ToList())
+    {
+    }
 
     public TuiSelector(ISelectable[] selectables, Func<string>? header = null, Func<string>? footer = null) :
         this(selectables)
     {
         _header = header;
         _footer = footer;
+    }
+
+    public TuiSelector(List<ISelectable> selectables, Func<string>? header = null, Func<string>? footer = null) : this(
+        selectables.ToArray(), header, footer
+    )
+    {
     }
 
     public static void WaitForInput()
@@ -27,9 +39,27 @@ public class TuiSelector(ISelectable[] selectables)
         }
     }
 
+    public void Add(ISelectable selectable)
+    {
+        Selectables.Add(selectable);
+        ResetIndex();
+    }
+
+    public void Remove(ISelectable selectable)
+    {
+        Selectables.Remove(selectable);
+        ResetIndex();
+    }
+
+    public void Clear()
+    {
+        Selectables.Clear();
+        ResetIndex();
+    }
+
     private void IncreaseIndex()
     {
-        if (_currentIndex >= selectables.Length - 1) return;
+        if (_currentIndex >= Selectables.Count - 1) return;
         _currentIndex++;
     }
 
@@ -43,7 +73,7 @@ public class TuiSelector(ISelectable[] selectables)
     {
         Console.Clear();
 
-        selectables[_currentIndex].Select();
+        Selectables[_currentIndex].Select();
     }
 
     private void Render()
@@ -69,9 +99,9 @@ public class TuiSelector(ISelectable[] selectables)
 
     private void RenderSelectables()
     {
-        for (int i = 0; i < selectables.Length; i++)
+        for (int i = 0; i < Selectables.Count; i++)
         {
-            Console.WriteLine($"{(_currentIndex == i ? '>' : ' ')} {selectables[i].Name}");
+            Console.WriteLine($"{(_currentIndex == i ? '>' : ' ')} {Selectables[i].Name}");
         }
     }
 
@@ -113,5 +143,10 @@ public class TuiSelector(ISelectable[] selectables)
         }
 
         return exiting;
+    }
+
+    private void ResetIndex()
+    {
+        _currentIndex = 0;
     }
 }

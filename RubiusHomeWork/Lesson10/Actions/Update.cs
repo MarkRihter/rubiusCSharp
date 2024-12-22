@@ -7,31 +7,43 @@ public class Update(ApplicationContext db) : ISelectable
 {
     public string Name { get; } = "Update";
 
+
+    private TuiSelector TuiSelector { get; } = new(new List<ISelectable>(), () => "Select equipment to update");
+
     public void Select()
     {
-        SearchAndUpdateEquipment();
+        SelectAndUpdateEquipment();
+
+        db.SaveChanges();
     }
 
-    private void SearchAndUpdateEquipment()
+    private void SelectAndUpdateEquipment()
     {
-        InputUtils.ReadNumber(out int id, "Enter id to update: ");
+        TuiSelector.Clear();
 
-        var equipment = db.Equipments.Find(id);
+        FillSelectorWithSelectables();
 
-        if (equipment != null)
+        TuiSelector.Run();
+    }
+
+    private void FillSelectorWithSelectables()
+    {
+        foreach (var equipment in db.Equipments.ToList())
         {
-            UpdateEquipment(equipment);
-        }
-        else
-        {
-            Console.WriteLine("Equipment for given id not found");
+            var selectable = new SelectableEquipment(equipment, UpdateEquipment);
+
+            TuiSelector.Add(selectable);
         }
     }
 
-    private void UpdateEquipment(Equipment equipment)
+    private void UpdateEquipment(SelectableEquipment selectableEquipment)
     {
         InputUtils.ReadNonEmptyLine(out var name, "Enter new equipment name: ");
 
-        equipment.Name = name;
+        selectableEquipment.Equipment.Name = name;
+
+        Console.WriteLine("Equipment has been updated");
+
+        TuiSelector.WaitForInput();
     }
 }
