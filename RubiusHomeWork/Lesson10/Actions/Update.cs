@@ -30,7 +30,7 @@ public class Update(ApplicationContext db) : ISelectable
 
     private void UpdateEquipment(Equipment equipment)
     {
-        InputUtils.ReadNonEmptyLine(out var name, "Enter new equipment name:");
+        InputUtils.ReadNonEmptyLine(out var name, "Enter new equipment name: ");
 
         equipment.Name = name;
     }

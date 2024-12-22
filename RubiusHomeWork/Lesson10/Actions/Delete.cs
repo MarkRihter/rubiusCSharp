@@ -10,6 +10,8 @@ public class Delete(ApplicationContext db) : ISelectable
     public void Select()
     {
         SearchAndDeleteEquipment();
+
+        db.SaveChanges();
     }
 
     private void SearchAndDeleteEquipment()

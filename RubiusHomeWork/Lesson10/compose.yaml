@@ -1,0 +1,30 @@
+﻿services:
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5430:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  csharp:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    command:
+      - dotnet
+      - run
+      - Program.cs
+    container_name: csharp
+    working_dir: /app
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - ../Common:/Common
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
