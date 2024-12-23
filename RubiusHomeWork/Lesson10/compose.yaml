@@ -1,7 +1,7 @@
 ﻿services:
   db:
     image: postgres:15
-    container_name: postgres-db
+    container_name: l10-postgres
     restart: always
     env_file:
       - .env
@@ -16,7 +16,7 @@
       - dotnet
       - run
       - Program.cs
-    container_name: csharp
+    container_name: l10-csharp
     working_dir: /app
     depends_on:
       - db
